@@ -1,6 +1,8 @@
 import React from "react";
+import { Bikes } from "../Data/Data";
 
 function Navbar() {
+  
   return (
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-4">
   <div class="container-fluid">
@@ -83,6 +85,7 @@ function Navbar() {
           <li>
             <a class="dropdown-item" href="#">Logout</a>
           </li>
+          
         </ul>
       </div>
     </div>

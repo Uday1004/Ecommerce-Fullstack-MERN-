@@ -1,4 +1,44 @@
 .pic1{
     height: 28rem;
     width: auto;
-}
+}         
+/* Add to your CSS file or in a <style> tag */
+
+/* Add to your CSS file or in a <style> tag */
+
+.slick-slide {
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .slick-slide img {
+    width: 100%;
+    border-radius: 10px;
+  }
+  
+  .slick-slide h3 {
+    margin: 10px 0;
+  }
+  
+  .slick-slide p {
+    margin: 5px 0;
+  }
+  
+  .slick-slide a {
+    display: block;
+    margin: 10px 0;
+    color: blue;
+  }
+  
+  .slick-slide button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .slick-slide button:hover {
+    background-color: #0056b3;
+  }
+  
