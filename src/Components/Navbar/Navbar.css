@@ -13,4 +13,7 @@ a {
     .centerOnMobile {
       text-align:center
     }
+    .dropdown-toggle{
+      margin-left: 0rem;
+    }
   }
