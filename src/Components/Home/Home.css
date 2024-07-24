@@ -1,44 +1,23 @@
-.pic1{
-    height: 28rem;
-    width: auto;
-}         
-/* Add to your CSS file or in a <style> tag */
+ 
+ .product-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ensures the container takes up the full height of its parent */
+}
 
-/* Add to your CSS file or in a <style> tag */
+.product-image {
+  width: 400px;  /* Set the desired width */
+  height: 300px; /* Set the desired height */
+  object-fit: cover; /* Ensures the image covers the entire area */
+}
+.Prod-img{
+  width: auto;
+  height: 160px;
+  object-fit: cover;
+}
 
-.slick-slide {
-    text-align: center;
-    padding: 10px;
-  }
-  
-  .slick-slide img {
-    width: 100%;
-    border-radius: 10px;
-  }
-  
-  .slick-slide h3 {
-    margin: 10px 0;
-  }
-  
-  .slick-slide p {
-    margin: 5px 0;
-  }
-  
-  .slick-slide a {
-    display: block;
-    margin: 10px 0;
-    color: blue;
-  }
-  
-  .slick-slide button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-  }
-  
-  .slick-slide button:hover {
-    background-color: #0056b3;
-  }
+ 
+ 
+
   

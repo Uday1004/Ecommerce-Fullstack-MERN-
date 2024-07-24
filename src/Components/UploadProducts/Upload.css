@@ -1,0 +1,50 @@
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  position: relative;
+}
+
+.no-bikes-message {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.bikes-list {
+  width: 100%;
+  padding: 0 16px;
+}
+
+.bike-card-col {
+  margin-bottom: 16px;
+}
+
+.bike-card {
+  width: 100%;
+}
+
+.bike-actions {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.add-button {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+.add-button.top-right {
+  top: 20px;
+  right: 20px;
+  bottom: auto;
+  left: auto;
+}
+
+.add-button.centered {
+  top: auto;
+  right: auto;
+}

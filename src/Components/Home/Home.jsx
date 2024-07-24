@@ -1,32 +1,12 @@
 import React from "react";
 import pic1 from "../Images/scooter.gif";
-import { Carousel } from "primereact/carousel";
+import { Link } from "react-router-dom";
+
 import "../Home/Home.css";
-import "primereact/resources/themes/saga-blue/theme.css";
-import "primereact/resources/primereact.min.css";
-import "primeicons/primeicons.css";
-import { Bikes } from "../Data/Data";
-import {Link} from "react-router-dom"
-
- 
-   
- 
-
-
+import Exclusivecarousel from "./Exclusivecarousel";
+import Productcarousel from "./Productcarousel";
 
 function Home() {
-  const responsiveOptions = [
-    {
-      breakpoint: "1024px",
-      numVisible: 3,
-      numScroll: 3,
-    },
-    {
-      breakpoint: "600px",
-      numVisible: 1,
-      numScroll: 1,
-    },]
-   
   return (
     <div>
       <header className="bg-white py-5 position-relative">
@@ -36,12 +16,10 @@ function Home() {
             <div className="col-lg-8 col-xl-7 col-xxl-6">
               <div className="my-5 text-center text-xl-start">
                 <h1 className="display-5 fw-bolder text-dark mb-2">
-                  A Bootstrap 5 template for modern businesses
+                  GoRide - <span className="fw-normal display-10">Make your ride </span>
                 </h1>
                 <p className="lead fw-normal text-dark-50 mb-4">
-                  Quickly design and customize responsive mobile-first sites
-                  with Bootstrap, the world’s most popular front-end open source
-                  toolkit!
+                  GoRide is an E-commerce platform that lets you ride with your favorite, without any purchase or extra expense. <div className="fw-bold">_Take a ride Now!</div>
                 </p>
                 <div className="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
                   <a
@@ -58,124 +36,172 @@ function Home() {
                 className="img-fluid rounded-3 my-5 pic1"
                 src={pic1}
                 style={{ transform: "scaleX(-1)" }}
-                alt="..."
+                alt="Scooter"
               />
             </div>
           </div>
         </div>
       </header>
 
-
-{/* ---------------------------------------------------------------Exclusive Product------------------------------------------------- */}
-
-      <section className="py-5 bg-dark" id="features">
+      {/* Services and solutions section */}
+      <section className="py-5" id="services">
         <div className="container px-5 my-5">
-          <div className="row gx-5">
-            <div className="col-lg-4 mb-5 mb-lg-0">
-              <h2 className="fw-bolder mb-0 text-white">Our Top Products</h2>
-              <p className="mb-0 text-white">
-                Paragraph of text beneath the heading to explain the heading.
-                Here is just a bit more text.
-              </p>
-            </div>
+          <div className="row gx-5 justify-content-center">
+            <div className="col-lg-8 col-xl-6"></div>
+            <div className="text-center">
+                  <div className="d-inline-block rounded-pill bg-secondary text-white py-1 mb-4 px-3 my-auto">
+                    SERVICES
+                  </div>
+                   
+                </div>
+            <div className="row gx-5">
+              <div className="col-lg-4 mb-5  ">
+                <div className="card h-100 shadow border-0 serve-card ">
+                  <img src="" alt="" />
 
-            <div className="col-lg-8">
-              <div className="row gx-5 row-cols-1 row-cols-md-2">
-                <div className="col mb-5 h-100">
-                  <div className="feature bg-primary bg-gradient text-white rounded-3 mb-3">
-                    <img className="img-fluid" src={pic1} alt="" />
+
+                  <div className="card-body p-4">
+                    <a className="text-decoration-none  " href="#!">
+                      <h5 className="card-title mb-3 fw-bold h4  text-center serve-text">
+                        It Strategy Consultancy
+                      </h5>
+                    </a>
+                    <p className="card-text mb-0 text-dark">
+                      At our consultancy firm, We specialize in providing IT
+                      strategy consulting services to organizations of all
+                      sizes. Our team of experienced consultants collaborates
+                      closely with your organization to develop a
+                      comprehensive IT strategy aligned with your business
+                      goals and objectives. Through our tailored approach, we
+                      ensure that your technology initiatives drive measurable
+                      results and sustainable growth.
+                    </p>
                   </div>
+
+                  <div className="card-footer p-4 pt-0 bg-transparent border-top-0"></div>
                 </div>
-                <div className="col mb-5 h-100">
-                  <div className="feature bg-primary bg-gradient text-white rounded-3 mb-3">
-                    <img className="img-fluid" src={pic1} alt="" />
+              </div>
+              <div className="col-lg-4 mb-5  ">
+                <div className="card h-100 shadow border-0 serve-card">
+                  <img src="" alt="" />
+
+
+                  <div className="card-body p-4">
+                    <a className="text-decoration-none  " href="#!">
+                      <h5 className="card-title mb-3 fw-bold h4  text-center serve-text">
+                        Product Mangement & QA
+                      </h5>
+                    </a>
+                    <p className="card-text mb-0 text-dark">
+                      Unlock seamless collaboration and elevate product
+                      excellence with our cutting-edge QA and Product
+                      Management Solutions. Our comprehensive services
+                      encompass rigorous testing protocols and strategic
+                      product roadmapping, empowering your team to deliver
+                      exceptional products on time, within budget, and with
+                      unmatched quality assurance.
+                    </p>
                   </div>
+
                 </div>
-                 
+              </div>
+              <div className="col-lg-4 mb-5  ">
+                <div className="card h-100 shadow border-0 serve-card">
+                  <img src="" alt="" />
+
+                  <div className="card-body p-4">
+                    <a className="text-decoration-none  " href="#!">
+                      <h5 className="card-title mb-3 fw-bold h4  text-center serve-text">
+                        Software Service
+                      </h5>
+                    </a>
+                    <p className="card-text mb-0 text-dark">
+                      Our software services encompass a comprehensive suite of
+                      solutions tailored to meet the diverse needs of
+                      businesses in today's dynamic digital landscape. From
+                      custom software development to system integration and
+                      maintenance, we provide end-to-end services aimed at
+                      ensuring efficient operations and empowering businesses
+                      to thrive in an ever-evolving technological environment.
+                    </p>
+                  </div>
+
+                  <div className="card-footer p-4 pt-0 bg-transparent border-top-0"></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
-
-{/* ------------------------------------carousel-------------------------------------------------------------- */}
-
-      <div className="container py-5">
-        <h2 className="text-center mb-4">Product Carousel</h2>
-        <Carousel
-          value={Bikes}
-          circular
-          numVisible={3}
-          responsiveOptions={responsiveOptions}
-          itemTemplate={bikeTemplate}
-          autoplayInterval={5000}
-          indicators={false} 
-        > 
-        </Carousel>
-      </div>
+        </section>
 
 
-{/* ------------------------------------------------map & contact -------------------------------------------------------------- */}
+        {/* Exclusive Product section */}
+        <div
+          className="container-fluid donate bg-dark my-5 py-5"
+          data-parallax="scroll"
+        >
+          <div className="container py-5">
+            <div className="row g-5 align-items-center">
+              <div className="col-lg-5 wow fadeIn" data-wow-delay="0.1s">
+                <div className="d-inline-block rounded-pill bg-secondary text-light py-1 px-3 mb-3">
+                  Exclusive Products
+                </div>
+                <h1 className="display-6 text-white mb-5">
+                  Choose any exclusive product of your choice
+                </h1>
+                <p className="text-white-50 mb-0">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam error, ratione cumque esse doloribus eum?
+                </p>
+              </div>
+              <div className="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                <Exclusivecarousel />
+              </div>
+            </div>
+          </div>
+          <Productcarousel />
+        </div>
 
-<section className="py-5 bg-light" id="scroll-target">
-        <div className="container px-5 my-5">
-          <div className="row gx-5 align-items-center">
-            <div className="col-lg-6">
-                 {/* <img
-                  className="img-fluid rounded mb-5 mb-lg-0"
-                  src={contactImg}
-                  alt="..."
-                /> */}
+        {/* Product Carousel section */}
+        <div className="bg-dark">
+          {/* <Productcarousel /> */}
+        </div>
+
+        {/* Map & Contact section */}
+        <section className="py-5 bg-light" id="scroll-target">
+          <div className="container px-5 my-5">
+            <div className="row gx-5 align-items-center">
+              <div className="col-lg-6">
                 <iframe
                   className="img-fluid rounded"
-                  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14653.805620593368!2d76.0430372!3d23.3356551!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3963670062b66555%3A0xfa5c9876e7c27b41!2sCloudstry%20Technology%20Private%20Limited!5e0!3m2!1sen!2sin!4v1712743996577!5m2!1sen!2sin"
-                  style={{ border: 0, height: "25rem", width: "40rem" }}
-                  allowfullscreen=""
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3682.4647491169058!2d75.84938557507971!3d22.636454479446307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962e70944c157f1%3A0x6bfcff54a729dbb5!2sSAGE%20University%2C%20Indore!5e0!3m2!1sen!2sin!4v1720419061645!5m2!1sen!2sin"
+                  style={{ border: 0, height: "25rem", width: "100%" }}
+                  allowFullScreen
                   loading="lazy"
-                  referrerpolicy="no-referrer-when-downgrade"
+                  referrerPolicy="no-referrer-when-downgrade"
                   title="map"
-                ></iframe>
-             </div>
-            <div className="col-lg-6">
-                 <div className="d-inline-block rounded-pill bg-secondary text-white py-1 px-3 mb-3">
+                />
+              </div>
+              <div className="col-lg-6">
+                <div className="d-inline-block rounded-pill bg-secondary text-white py-1 px-3 mb-3">
                   Connect With Us
                 </div>
-                  <h1 className="display-6 text-dark mb-3">
-                  We're grateful for your connection and extend our sincere
-                  thanks
+                <h1 className="display-6 text-dark mb-3">
+                  We appreciate your connection and sincerely thank you.
                 </h1>
-                  <p className="text-dark-50 mb-4">
+                <p className="text-dark-50 mb-4">
                   We have received your message and anticipate further
-                  communication with you
+                  communication with you.
                 </p>
                 <button
                   to="/Support"
-                  className="cont-btn mt-4 btn-lg px-4 text-decoration-none"
+                  className="cont-btn mt-4 btn-lg px-3 text-decoration-none btn-outline-dark"
                 >
-                  contact Us
+                  Contact us
                 </button>
-              
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-       
-    </div>
-  );
-}
-
-function bikeTemplate(bike) {
-  return (
-    <div className="product-item">
-      <img src={bike.bike_image} alt={bike.bike_name} />
-      <div className="product-details">
-        <h4>{bike.bike_name}</h4>
-        <p>Price: ₹{bike.bike_price}</p>
-        <a href={bike.url} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
-          View Details
-        </a>
-        <button className="btn btn-success">Add to Cart</button>
-      </div>
+        </section>
     </div>
   );
 }

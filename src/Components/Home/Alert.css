@@ -1,0 +1,12 @@
+ 
+.custom-toast {
+    background-color: rgb(255, 255, 255) !important; /* Change the background color */
+    
+    }
+    
+.custom-toast-body {
+color: rgb(38, 167, 38); /* Change the text color */
+font-weight: 700;
+font-size: 16px; /* Change the font size */
+ 
+}
