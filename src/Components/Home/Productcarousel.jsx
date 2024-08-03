@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -8,11 +8,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../Home/Alert.css'
 import axios from "axios";
+import { Link } from "react-router-dom";
 
-function ProductCarousel() {
-  // const [bikes, setBikes] = useState([]);
-
-  const notify = () => toast.success('Item added to cart' ,{
+function ProductCarousel({ addToCart }) {
+  const notify = () => toast.success('Item added to cart', {
     className: 'custom-toast',
     bodyClassName: 'custom-toast-body',
     autoClose: 3000, // Duration in milliseconds
@@ -48,28 +47,15 @@ function ProductCarousel() {
     ]
   };
 
-  useEffect(() => {
-    const fetchBikes = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/bikes");
-        setBikes(response.data);
-      } catch (error) {
-        console.error("Error fetching bikes:", error);
-      }
-    };
-
-    fetchBikes();
-  }, []);
-
   return (
     <section>
       <div className="container py-5">
         <div className="text-white">
-          <div className="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style={{maxWidth:"28rem"}}>
+          <div className="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style={{ maxWidth: "28rem" }}>
             <div className="d-inline-block rounded-pill bg-secondary text-white py-1 px-3 mb-3">
               Our Products
             </div>
-            <p className=" " style={{fontSize:'18px'}}>
+            <p style={{ fontSize: '18px' }}>
               Seamless Care, Wherever You Are: RHC Delivers Tele-Services & In-Person Excellence.
             </p>
           </div>
@@ -80,7 +66,7 @@ function ProductCarousel() {
               <div className="card col-lg-9">
                 <div className="d-flex justify-content-center p-3">
                   <img
-                    src={`http://localhost:5000/uploads/${value.bike_image}`}
+                    src={value.bike_image}
                     className="Prod-img"
                     alt="Bike"
                   />
@@ -108,7 +94,16 @@ function ProductCarousel() {
                   </div>
                   <div className="d-flex justify-content-between mb-2">
                     <p className="text-muted mb-0">
-                      <button className="btn btn-outline-success" onClick={notify}>Add to cart</button>
+                      <Link 
+                        to={`/cart`} 
+                        className="btn btn-outline-success"
+                        onClick={() => {
+                          addToCart(value);
+                          notify();
+                        }}
+                      >
+                        Add to cart
+                      </Link>
                     </p>
                     <div className="ms-auto text-warning">
                       <button className="btn btn-outline-primary">View Details</button>
