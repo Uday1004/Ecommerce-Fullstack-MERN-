@@ -63,9 +63,7 @@ function Mybikes() {
                     <br />
                     Price Range: {bike.priceRange}
                     <br />
-                    Insurance: {bike.insurance}
-                    <br />
-                    Description: {bike.description}
+                    
                   </MDBCardText>
                   <MDBRow>
                     <MDBCol>

@@ -151,8 +151,8 @@ const Upload = () => {
                       <p>Category: {bike.category}</p>
                       <p>Type: {bike.type === 1 ? "Default" : "Modified"}</p>
                       <p>Price Range: {bike.priceRange}</p>
-                      <p>Insurance: {bike.insurance === 1 ? "Yes" : "No"}</p>
-                      <p>Description: {bike.description}</p>
+                      {/* <p>Insurance: {bike.insurance === 1 ? "Yes" : "No"}</p>
+                      <p>Description: {bike.description}</p> */}
                     </>
                   }
                 />
@@ -247,6 +247,7 @@ const Upload = () => {
               step={200}
               onChange={(value) => setPriceRange(value)}
               value={priceRange}
+              required
             />
             <span>Select Price Range ({priceRange}rs)</span>
           </div>
@@ -274,8 +275,9 @@ const Upload = () => {
               id="imageUpload"
               beforeUpload={handleImageChange}
               showUploadList={false}
+              required
             >
-              <Button icon={<UploadOutlined />}>Upload Image</Button>
+              <Button icon={<UploadOutlined />}></Button>
             </AntUpload>
             {fileName && <p className="mt-2">Selected file: {fileName}</p>}
           </div>

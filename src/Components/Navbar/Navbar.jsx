@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import DrawerComponent from '../Cart/DrawerComponent';
+import DrawerComponent from './DrawerComponent';
 import 'rsuite/dist/rsuite-no-reset.min.css';
 
 function Navbar() {
