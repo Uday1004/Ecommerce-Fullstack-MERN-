@@ -9,6 +9,7 @@ import { CustomProvider } from "rsuite";
 import Demoupload from "./Components/UploadProducts/Demoupload";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import ProductPage from "./Components/Utils/Products";
 
 
 function App() {
@@ -21,6 +22,8 @@ function App() {
         <Route exact path="/Upload" element={<Upload />} />
         <Route exact path="/Demoupload" element={<Demoupload />} />
         <Route exact path="/MyBikes" element={<Mybikes />} />
+        <Route exact path="/Products" element={<ProductPage />} />
+        <Route exact path="/demo" element={<Demoupload />} />
       </Routes>
 
       <Footer />

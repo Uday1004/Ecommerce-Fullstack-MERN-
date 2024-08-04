@@ -12,7 +12,7 @@ function Navbar() {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-4">
+      <nav className="navbar navbar-expand-lg navbar-dark p-4" style={{background:'#30383c'}}>
         <div className="container-fluid">
           <a className="navbar-brand" href="#">Logo</a>
           <button
@@ -32,7 +32,7 @@ function Navbar() {
                 <Link className="nav-link active" aria-current="page" to="/">Home</Link>
               </li>
               <li className="nav-item mx-3">
-                <a className="nav-link" href="#">Bikes</a>
+                <Link className="nav-link" to="/Products">Bikes</Link>
               </li>
               <li className="nav-item mx-3">
                 <a className="nav-link" href="#">Exclusives</a>
