@@ -1,21 +1,19 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../Home/Home.css";
-// import { Bikes } from "../Data/Data";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import '../Home/Alert.css'
 import axios from "axios";
 
-function ProductCarousel() {
+function ProductCarousel({ addToCart }) {
   const [bikes, setBikes] = useState([]);
 
-  const notify = () => toast.success('Item added to cart' ,{
+  const notify = () => toast.success('Item added to cart', {
     className: 'custom-toast',
     bodyClassName: 'custom-toast-body',
-    autoClose: 3000, // Duration in milliseconds
+    autoClose: 3000,
   });
 
   const settings = {
@@ -25,7 +23,7 @@ function ProductCarousel() {
     infinite: true,
     autoplay: true,
     speed: 200,
-    slidesToShow: 3, 
+    slidesToShow: 3,
     slidesToScroll: 1,
     responsive: [
       {
@@ -65,24 +63,24 @@ function ProductCarousel() {
     <section>
       <div className="container py-5">
         <div className="text-white">
-          <div className="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style={{maxWidth:"28rem"}}>
+          <div className="text-center mx-auto mb-5" style={{ maxWidth: "28rem" }}>
             <div className="d-inline-block rounded-pill bg-secondary text-white py-1 px-3 mb-3">
               Our Products
             </div>
-            <p className=" " style={{fontSize:'18px'}}>
+            <p style={{ fontSize: '18px' }}>
               Seamless Care, Wherever You Are: RHC Delivers Tele-Services & In-Person Excellence.
             </p>
           </div>
         </div>
         <Slider {...settings}>
-          {bikes.map((value, index) => (
-            <div key={index} className="p-3">
+          {bikes.map((value) => (
+            <div key={value._id} className="p-3">
               <div className="card col-lg-9">
                 <div className="d-flex justify-content-center p-3">
                   <img
                     src={`http://localhost:5000/uploads/${value.image}`}
                     className="Prod-img"
-                    alt="Bike"
+                    alt={value.name}
                   />
                 </div>
                 <div className="card-body">
@@ -93,22 +91,19 @@ function ProductCarousel() {
                       </a>
                     </p>
                     <p className="small ms-auto text-warning">
-                      <i className="fa fa-star"></i>
-                      <i className="fa fa-star"></i>
-                      <i className="fa fa-star"></i>
-                      <i className="fa fa-star"></i>
-                      <i className="fa fa-star"></i>
+                      {[...Array(5)].map((_, i) => (
+                        <i key={i} className="fa fa-star"></i>
+                      ))}
                     </p>
                   </div>
                   <div className="d-flex justify-content-between mb-3">
                     <h5 className="mb-0">{value.name}</h5>
                     <h5 className="text-dark mb-0">{value.priceRange}</h5>
-                    {/* <h5 className="text-dark mb-0">{value.description}</h5> */}
                     <h5 className="text-dark mb-0">{value.category}</h5>
                   </div>
                   <div className="d-flex justify-content-between mb-2">
                     <p className="text-muted mb-0">
-                      <button className="btn btn-outline-success" onClick={notify}>Add to cart</button>
+                      <button className="btn btn-outline-success" onClick={() => { addToCart(value); notify(); }}>Add to cart</button>
                     </p>
                     <div className="ms-auto text-warning">
                       <button className="btn btn-outline-primary">View Details</button>
