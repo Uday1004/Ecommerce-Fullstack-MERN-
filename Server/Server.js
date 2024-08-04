@@ -33,6 +33,19 @@ const formDataSchema = new mongoose.Schema({
 
 const FormData = mongoose.model('FormData', formDataSchema);
 
+// Schema for cart data
+const cartItemSchema = new mongoose.Schema({
+    name: String,
+    category: String,
+    type: String,
+    priceRange: Number,
+    insurance: String,
+    image: String,
+    description: String
+});
+
+const CartItem = mongoose.model('CartItem', cartItemSchema);
+
 // Multer setup for image upload
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -63,13 +76,66 @@ app.post('/submit', upload.single('image'), async (req, res) => {
     }
 });
 
-// New route to fetch data
+// Fetch bikes
 app.get('/bikes', async (req, res) => {
     try {
         const bikes = await FormData.find();
         res.json(bikes);
     } catch (error) {
         console.error('Error fetching bikes:', error);
+        res.status(500).json({ message: 'Internal Server Error', error: error.message });
+    }
+});
+
+// Cart Routes
+// Add to cart
+app.post('/cart', async (req, res) => {
+    try {
+        const { bikeId } = req.body;
+
+        // Fetch bike details using bikeId from FormData
+        const bike = await FormData.findById(bikeId);
+        if (!bike) {
+            return res.status(404).json({ message: 'Bike not found' });
+        }
+
+        // Create a new cart item with the fetched bike details
+        const cartItem = new CartItem({
+            name: bike.name,
+            category: bike.category,
+            type: bike.type,
+            priceRange: bike.priceRange,
+            insurance: bike.insurance,
+            image: bike.image,
+            description: bike.description
+        });
+        await cartItem.save();
+
+        res.json({ message: 'Bike added to cart' });
+    } catch (err) {
+        console.error('Error adding bike to cart:', err);
+        res.status(500).json({ message: 'Error adding bike to cart', error: err.message });
+    }
+});
+
+// Fetch cart items
+app.get('/cart', async (req, res) => {
+    try {
+        const cartItems = await CartItem.find();
+        res.json(cartItems);
+    } catch (error) {
+        console.error('Error fetching cart:', error);
+        res.status(500).json({ message: 'Internal Server Error', error: error.message });
+    }
+});
+
+// Remove from cart
+app.delete('/cart/:id', async (req, res) => {
+    try {
+        await CartItem.findByIdAndDelete(req.params.id);
+        res.json({ message: 'Item removed from cart' });
+    } catch (error) {
+        console.error('Error removing item from cart:', error);
         res.status(500).json({ message: 'Internal Server Error', error: error.message });
     }
 });
