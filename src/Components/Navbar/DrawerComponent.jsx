@@ -9,14 +9,14 @@ function DrawerComponent({ isOpen, toggleDrawer }) {
   useEffect(() => {
     if (isOpen) {
       // Fetch cart items from the server when the drawer opens
-      axios.get('/api/cart')
+      axios.get('http://localhost:5000/cart')
         .then(response => setCartItems(response.data))
         .catch(error => console.error('Error fetching cart items:', error));
     }
   }, [isOpen]);
 
   const handleRemoveFromCart = (itemId) => {
-    axios.delete(`/api/cart/${itemId}`)
+    axios.delete(`http://localhost:5000/cart/${itemId}`)
       .then(() => {
         setCartItems(cartItems.filter(item => item._id !== itemId));
       })
