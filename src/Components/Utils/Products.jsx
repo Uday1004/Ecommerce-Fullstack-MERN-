@@ -14,21 +14,27 @@ import {
   MDBContainer,
   MDBIcon,
 } from "mdb-react-ui-kit";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Select, Checkbox } from "antd";
 import { Slider } from "antd";
 
 const { Sider, Content } = Layout;
+const { Option } = Select;
 
 const ProductPage = () => {
   const [searchText, setSearchText] = useState("");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [priceRange, setPriceRange] = useState([1500, 5000]);
+  const [recentUpload, setRecentUpload] = useState(false);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get("http://localhost:5000/bikes");
         setProducts(response.data);
+        setFilteredProducts(response.data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -39,9 +45,45 @@ const ProductPage = () => {
     fetchProducts();
   }, []);
 
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchText.toLowerCase())
-  );
+  useEffect(() => {
+    let updatedProducts = products.filter((product) =>
+      product.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+
+    if (selectedCategory.length > 0) {
+      updatedProducts = updatedProducts.filter((product) =>
+        selectedCategory.includes(product.category)
+      );
+    }
+
+    if (priceRange) {
+      updatedProducts = updatedProducts.filter(
+        (product) =>
+          product.priceRange >= priceRange[0] &&
+          product.priceRange <= priceRange[1]
+      );
+    }
+
+    if (recentUpload) {
+      updatedProducts = updatedProducts.sort((a, b) =>
+        new Date(b.uploadDate) - new Date(a.uploadDate)
+      );
+    }
+
+    setFilteredProducts(updatedProducts);
+  }, [searchText, selectedCategory, priceRange, recentUpload, products]);
+
+  const handleCategoryChange = (value) => {
+    setSelectedCategory(value);
+  };
+
+  const handlePriceRangeChange = (value) => {
+    setPriceRange(value);
+  };
+
+  const handleRecentUploadChange = (e) => {
+    setRecentUpload(e.target.checked);
+  };
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -56,7 +98,6 @@ const ProductPage = () => {
             label="Search products"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            // style={{border:'2px solid blue'}}
           />
           <Menu
             mode="inline"
@@ -70,30 +111,43 @@ const ProductPage = () => {
             >
               Filter
             </div>
-            <Menu.Item className="btn mt-2" key="1">
-              Categories
-            </Menu.Item>
-            {/* <Menu.Item key="2" className="btn mt-2">Price Range</Menu.Item> */}
-
-            <div className="mt-4 mb-4" style={{ marginLeft: ".7rem" }}>
+            <div className="mt-4 mb-4">
+              <label htmlFor="categoryFilter" className="form-label">
+                Categories
+              </label>
+              <Select
+                id="categoryFilter"
+                mode="multiple"
+                placeholder="Select categories"
+                onChange={handleCategoryChange}
+                style={{ width: "100%" }}
+              >
+                {/* Replace these options with dynamic category list */}
+                <Option value="Category1">Category 1</Option>
+                <Option value="Category2">Category 2</Option>
+                <Option value="Category3">Category 3</Option>
+              </Select>
+            </div>
+            <div className="mt-4 mb-4">
               <label htmlFor="priceRange" className="form-label">
                 Price Range
               </label>
               <Slider
                 id="priceRange"
+                range
                 min={1500}
                 max={5000}
                 step={200}
-                //   onChange={(value) => setPriceRange(value)}
-                //   value={priceRange}
-                required
+                onChange={handlePriceRangeChange}
+                value={priceRange}
               />
-              {/* <span>Select Price Range ({priceRange}rs)</span> */}
+              <span>Select Price Range ({priceRange[0]} - {priceRange[1]} rs)</span>
             </div>
-
-            <Menu.Item key="3" className="btn mt-2">
-              Recent upload
-            </Menu.Item>
+            <div className="mt-4 mb-4">
+              <Checkbox onChange={handleRecentUploadChange}>
+                Recent Upload
+              </Checkbox>
+            </div>
           </Menu>
         </div>
       </Sider>
@@ -145,7 +199,7 @@ const ProductPage = () => {
                         </MDBRipple>
                         <MDBCardBody>
                           <MDBCardTitle>{product.name}</MDBCardTitle>
-                          <MDBCardText>Price: {product.price}</MDBCardText>
+                          <MDBCardText>Price: {product.priceRange} rs</MDBCardText>
                           <MDBRow>
                             <MDBCol>
                               <MDBBtn className="me-1" color="danger">

@@ -28,7 +28,8 @@ const formDataSchema = new mongoose.Schema({
     priceRange: Number,
     insurance: String,
     image: String,
-    description: String
+    description: String,
+    uploadDate: { type: Date, default: Date.now } // Automatically set to current date
 });
 
 const FormData = mongoose.model('FormData', formDataSchema);
@@ -61,31 +62,41 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Routes
+// Routes
 app.post('/submit', upload.single('image'), async (req, res) => {
     try {
-        const { name, category, type, priceRange, insurance, description } = req.body;
+        const { name, category, type, priceRange, insurance, description,uploadDate } = req.body;
         const image = req.file ? req.file.filename : '';
 
-        const formData = new FormData({ name, category, type, priceRange, insurance, image, description });
+        // Log received data for debugging
+        console.log('Received data:', { name, category, type, priceRange, insurance, description });
+        console.log('Received image file:', image);
+
+        // Create a new document with the current date and time
+        const formData = new FormData({ 
+            name, 
+            category, 
+            type, 
+            priceRange, 
+            insurance, 
+            image, 
+            description 
+        });
+
+        // Save the document
         await formData.save();
 
+        // Send a success response
         res.json({ message: 'Form submitted successfully!' });
     } catch (error) {
+        // Log the error for debugging
         console.error('Error submitting form:', error);
+
+        // Send an error response
         res.status(500).json({ message: 'Internal Server Error', error: error.message });
     }
 });
 
-// Fetch bikes
-app.get('/bikes', async (req, res) => {
-    try {
-        const bikes = await FormData.find();
-        res.json(bikes);
-    } catch (error) {
-        console.error('Error fetching bikes:', error);
-        res.status(500).json({ message: 'Internal Server Error', error: error.message });
-    }
-});
 
 // Cart Routes
 // Add to cart

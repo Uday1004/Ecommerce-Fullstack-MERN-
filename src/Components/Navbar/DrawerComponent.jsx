@@ -73,7 +73,7 @@ function DrawerComponent({ isOpen, toggleDrawer }) {
               <ul className="list-group">
                 {cartItems.map(item => (
                   <li key={item._id} className="list-group-item d-flex align-items-center flex-between">
-                    <img src={`http://localhost:5000/uploads/${item.image}`} alt="Product" className="img-fluid me-3" style={{ width: '96px', height: '96px' }} />
+                    <img src={`http://localhost:5000/uploads/${item.image}`} alt="Product" className="img-fluid me-3" style={{ width: '25%',objectFi:'contain',aspectRatio:'3/2',mixBlendMode:"darken" }} />
                     <div className="flex-grow-1">
                       <h6 className="mb-0">{item.name}</h6>
                       <small className="text-muted">{item.category}</small>
