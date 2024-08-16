@@ -15,7 +15,9 @@ import {
   MDBIcon,
 } from "mdb-react-ui-kit";
 import { Layout, Menu, Select, Checkbox } from "antd";
+import { ToastContainer, toast } from "react-toastify";
 import { Slider } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const { Sider, Content } = Layout;
 const { Option } = Select;
@@ -28,6 +30,21 @@ const ProductPage = () => {
   const [priceRange, setPriceRange] = useState([1500, 5000]);
   const [recentUpload, setRecentUpload] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const navigate = useNavigate();
+
+  const notifySuccess = () =>
+    toast.success("Item added to cart", {
+      className: "custom-toast",
+      bodyClassName: "custom-toast-body",
+      autoClose: 3000,
+    });
+
+  const notifyError = () =>
+    toast.error("Failed to add item to cart", {
+      className: "custom-toast",
+      bodyClassName: "custom-toast-body",
+      autoClose: 3000,
+    });
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -40,7 +57,7 @@ const ProductPage = () => {
         console.error("Error fetching products:", error);
         setLoading(false);
       }
-    };
+    }; 
 
     fetchProducts();
   }, []);
@@ -65,8 +82,8 @@ const ProductPage = () => {
     }
 
     if (recentUpload) {
-      updatedProducts = updatedProducts.sort((a, b) =>
-        new Date(b.uploadDate) - new Date(a.uploadDate)
+      updatedProducts = updatedProducts.sort(
+        (a, b) => new Date(b.uploadDate) - new Date(a.uploadDate)
       );
     }
 
@@ -84,6 +101,29 @@ const ProductPage = () => {
   const handleRecentUploadChange = (e) => {
     setRecentUpload(e.target.checked);
   };
+
+  const addToCart = async (product) => {
+    try {
+      const response = await axios.post("http://localhost:5000/cart", {
+        bikeId: product._id,
+      });
+      if (response.status === 200) {
+        notifySuccess();
+      } else {
+        notifyError();
+      }
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+      notifyError();
+    }
+  };
+
+
+  const handleViewDetails = (id) => {
+    navigate(`/Product-Details/${id}`);
+  };
+
+ 
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -122,7 +162,6 @@ const ProductPage = () => {
                 onChange={handleCategoryChange}
                 style={{ width: "100%" }}
               >
-                {/* Replace these options with dynamic category list */}
                 <Option value="Category1">Category 1</Option>
                 <Option value="Category2">Category 2</Option>
                 <Option value="Category3">Category 3</Option>
@@ -141,7 +180,9 @@ const ProductPage = () => {
                 onChange={handlePriceRangeChange}
                 value={priceRange}
               />
-              <span>Select Price Range ({priceRange[0]} - {priceRange[1]} rs)</span>
+              <span>
+                Select Price Range ({priceRange[0]} - {priceRange[1]} rs)
+              </span>
             </div>
             <div className="mt-4 mb-4">
               <Checkbox onChange={handleRecentUploadChange}>
@@ -170,60 +211,79 @@ const ProductPage = () => {
             <p>Loading products...</p>
           ) : (
             <MDBContainer className="mt-5">
-              <MDBRow>
-                {filteredProducts.length > 0 ? (
-                  filteredProducts.map((product) => (
-                    <MDBCol md="4" key={product._id} className="mb-4">
-                      <MDBCard className="h-100">
-                        <MDBRipple
-                          rippleColor="light"
-                          rippleTag="div"
-                          className="bg-image hover-overlay"
-                        >
-                          <MDBCardImage
-                            src={`http://localhost:5000/uploads/${product.image}`}
-                            alt={product.name}
-                            className="img-fluid"
-                            onError={(e) =>
-                              (e.target.src = "path/to/default/image.jpg")
-                            }
-                          />
-                          <a href="#!">
-                            <div
-                              className="mask"
+              <div
+                style={{
+                  maxHeight: "500px",
+                  overflowY: "auto",
+                }}
+              >
+                <MDBRow>
+                  {filteredProducts.length > 0 ? (
+                    filteredProducts.map((product) => (
+                      <MDBCol md="4" key={product._id} className="mb-4">
+                        <MDBCard className="h-100">
+                          <MDBRipple
+                            rippleColor="light"
+                            rippleTag="div"
+                            className="bg-image hover-overlay"
+                          >
+                            <MDBCardImage
+                              src={`http://localhost:5000/uploads/${product.image}`}
+                              alt={product.name}
+                              className="img-fluid"
+                              onError={(e) =>
+                                (e.target.src = "path/to/default/image.jpg")
+                              }
                               style={{
-                                backgroundColor: "rgba(251, 251, 251, 0.15)",
+                                objectFit: "contain",
+                                aspectRatio: "3/2",
+                                mixBlendMode: "darken",
                               }}
-                            ></div>
-                          </a>
-                        </MDBRipple>
-                        <MDBCardBody>
-                          <MDBCardTitle>{product.name}</MDBCardTitle>
-                          <MDBCardText>Price: {product.priceRange} rs</MDBCardText>
-                          <MDBRow>
-                            <MDBCol>
-                              <MDBBtn className="me-1" color="danger">
-                                <MDBIcon fas icon="trash" />
-                              </MDBBtn>
-                            </MDBCol>
-                            <MDBCol>
-                              <MDBBtn className="me-2 mx-2" color="info">
-                                <MDBIcon fas icon="edit" />
-                              </MDBBtn>
-                            </MDBCol>
-                          </MDBRow>
-                        </MDBCardBody>
-                      </MDBCard>
-                    </MDBCol>
-                  ))
-                ) : (
-                  <p>No products found</p>
-                )}
-              </MDBRow>
+                            />
+                            <a href="#!">
+                              <div
+                                className="mask"
+                                style={{
+                                  backgroundColor: "rgba(251, 251, 251, 0.15)",
+                                }}
+                              ></div>
+                            </a>
+                          </MDBRipple>
+                          <MDBCardBody>
+                            <MDBCardTitle>{product.name}</MDBCardTitle>
+                            <MDBCardText>
+                              Price: {product.priceRange} rs
+                            </MDBCardText>
+                            <MDBRow>
+                              <div className="d-flex justify-content-between mb-2">
+                                <button
+                                  className="btn btn-outline-success"
+                                  onClick={() => addToCart(product)}
+                                >
+                                  Add to cart
+                                </button>
+                                <button
+                                  className="btn btn-outline-primary"
+                                  onClick={() => handleViewDetails(product._id)}
+                                >
+                                  View Details
+                                </button>
+                              </div>
+                            </MDBRow>
+                          </MDBCardBody>
+                        </MDBCard>
+                      </MDBCol>
+                    ))
+                  ) : (
+                    <p>No products found</p>
+                  )}
+                </MDBRow>
+              </div>
             </MDBContainer>
           )}
         </Content>
       </Layout>
+      <ToastContainer />
     </Layout>
   );
 };

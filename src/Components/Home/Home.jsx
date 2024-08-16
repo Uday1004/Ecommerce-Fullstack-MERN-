@@ -50,7 +50,7 @@ function Home() {
             <div className="col-lg-8 col-xl-6"></div>
             <div className="text-center">
                   <div className="d-inline-block rounded-pill bg-secondary text-white py-1 mb-4 px-3 my-auto">
-                    SERVICES
+                    SERVICES WE PROVIDE
                   </div>
                    
                 </div>
@@ -61,20 +61,15 @@ function Home() {
 
 
                   <div className="card-body p-4">
+                    <h1 className="text-center"><i class="fa fa-credit-card" aria-hidden="true"></i>
+                    </h1>
                     <a className="text-decoration-none  " href="#!">
                       <h5 className="card-title mb-3 fw-bold h4  text-center serve-text">
-                        It Strategy Consultancy
+                        Low-cost Riding 
                       </h5>
                     </a>
                     <p className="card-text mb-0 text-dark">
-                      At our consultancy firm, We specialize in providing IT
-                      strategy consulting services to organizations of all
-                      sizes. Our team of experienced consultants collaborates
-                      closely with your organization to develop a
-                      comprehensive IT strategy aligned with your business
-                      goals and objectives. Through our tailored approach, we
-                      ensure that your technology initiatives drive measurable
-                      results and sustainable growth.
+                    A transportation service designed to offer rides at a fraction of the usual cost, catering to budget-conscious commuters. Whether for daily travel or occasional trips, this service ensures that passengers can reach their destinations affordably while still enjoying a reliable and comfortable journey.
                     </p>
                   </div>
 
@@ -87,19 +82,14 @@ function Home() {
 
 
                   <div className="card-body p-4">
+                  <h1 className="text-center"><i class="fa fa-motorcycle" aria-hidden="true"></i> </h1>
                     <a className="text-decoration-none  " href="#!">
                       <h5 className="card-title mb-3 fw-bold h4  text-center serve-text">
-                        Product Mangement & QA
+                        E-Rental Bike
                       </h5>
                     </a>
                     <p className="card-text mb-0 text-dark">
-                      Unlock seamless collaboration and elevate product
-                      excellence with our cutting-edge QA and Product
-                      Management Solutions. Our comprehensive services
-                      encompass rigorous testing protocols and strategic
-                      product roadmapping, empowering your team to deliver
-                      exceptional products on time, within budget, and with
-                      unmatched quality assurance.
+                    A modern bike rental service that provides access to electric bikes, combining the ease of cycling with the efficiency of electric power. Ideal for city commutes or leisurely rides, e-rental bikes offer a green alternative to traditional transportation, with flexible rental periods and easy pick-up and drop-off locations.
                     </p>
                   </div>
 
@@ -110,19 +100,14 @@ function Home() {
                   <img src="" alt="" />
 
                   <div className="card-body p-4">
+                  <h1 className="text-center"><i class="fa fa-clock-o" aria-hidden="true"></i> </h1>
                     <a className="text-decoration-none  " href="#!">
                       <h5 className="card-title mb-3 fw-bold h4  text-center serve-text">
-                        Software Service
+                        24*7 Customer Support
                       </h5>
                     </a>
                     <p className="card-text mb-0 text-dark">
-                      Our software services encompass a comprehensive suite of
-                      solutions tailored to meet the diverse needs of
-                      businesses in today's dynamic digital landscape. From
-                      custom software development to system integration and
-                      maintenance, we provide end-to-end services aimed at
-                      ensuring efficient operations and empowering businesses
-                      to thrive in an ever-evolving technological environment.
+                    A comprehensive support system that guarantees assistance at any time of the day, every day of the week. With 24/7 customer support, users can resolve issues, get information, or seek help whenever they need it, ensuring a seamless and stress-free experience with the service.
                     </p>
                   </div>
 

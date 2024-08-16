@@ -1,0 +1,35 @@
+ /* src/components/ProductCarousel.css */
+
+.carousel-slide {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .carousel-content {
+    flex: 1;
+    padding-right: 20px;
+  }
+  
+  .carousel-content h2 {
+    margin-bottom: 10px;
+  }
+  
+  .carousel-content p {
+    margin-bottom: 20px;
+  }
+  
+  .carousel-content .btn {
+    margin-right: 10px;
+  }
+  
+  .carousel-image {
+    flex: 1;
+  }
+  
+  .carousel-image img {
+    width: 100%;
+    height: auto;
+  }
+  

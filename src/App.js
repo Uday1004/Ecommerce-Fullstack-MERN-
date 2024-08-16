@@ -10,9 +10,11 @@ import Demoupload from "./Components/UploadProducts/Demoupload";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import ProductPage from "./Components/Utils/Products";
+import Topproducts from "./Components/Utils/Exclusive";
+import Details from "./Components/Proudct_details/Details";
 
 
-function App() {
+function App() { 
   return (
     <CustomProvider>
       <div className="App">
@@ -24,6 +26,9 @@ function App() {
         <Route exact path="/MyBikes" element={<Mybikes />} />
         <Route exact path="/Products" element={<ProductPage />} />
         <Route exact path="/demo" element={<Demoupload />} />
+        <Route exact path="/Top-Products" element={<Topproducts />} />
+        <Route exact path="/Product-Details/:id" element={<Details />} />
+
       </Routes>
 
       <Footer />

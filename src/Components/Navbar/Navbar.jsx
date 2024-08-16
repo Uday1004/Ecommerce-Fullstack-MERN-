@@ -35,7 +35,7 @@ function Navbar() {
                 <Link className="nav-link" to="/Products">Bikes</Link>
               </li>
               <li className="nav-item mx-3">
-                <a className="nav-link" href="#">Exclusives</a>
+                <Link className="nav-link" to="/Top-products">Exclusives</Link>
               </li>
               <li className="nav-item dropdown mx-3">
                 <a

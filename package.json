@@ -30,6 +30,7 @@
     "react-toastify": "^10.0.5",
     "rsuite": "^5.67.0",
     "slick-carousel": "^1.8.1",
+    "swiper": "^11.1.9",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
