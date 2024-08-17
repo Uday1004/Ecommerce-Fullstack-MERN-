@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import DrawerComponent from './DrawerComponent';
 import 'rsuite/dist/rsuite-no-reset.min.css';
+// import { Button } from '@mantine/core';
 
 function Navbar() {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -61,6 +62,19 @@ function Navbar() {
                 </a>
               </li>
               <li className="nav-item dropdown mx-3">
+                <Link
+                  className="nav-link "
+                  to='/Auth-Signin'
+                  // id="navbarDropdownUser"
+                  role="button"
+                  // data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <button className="btn btn-primary" aria-hidden="true">Login</button>
+                </Link>
+                
+              </li>
+              {/* <li className="nav-item dropdown mx-3">
                 <a
                   className="nav-link dropdown-toggle"
                   href="#"
@@ -78,7 +92,7 @@ function Navbar() {
                   <li><hr className="dropdown-divider" /></li>
                   <li><a className="dropdown-item" href="#">Logout</a></li>
                 </ul>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

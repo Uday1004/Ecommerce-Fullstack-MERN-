@@ -17,7 +17,7 @@ import {
 import { Layout, Menu, Select, Checkbox } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 import { Slider } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Link } from "react-router-dom";
 
 const { Sider, Content } = Layout;
 const { Option } = Select;
@@ -119,9 +119,9 @@ const ProductPage = () => {
   };
 
 
-  const handleViewDetails = (id) => {
-    navigate(`/Product-Details/${id}`);
-  };
+  // const handleViewDetails = (id) => {
+  //   navigate(`/Product-Details/${id}`);
+  // };
 
  
 
@@ -262,12 +262,13 @@ const ProductPage = () => {
                                 >
                                   Add to cart
                                 </button>
-                                <button
+                                <Link
                                   className="btn btn-outline-primary"
-                                  onClick={() => handleViewDetails(product._id)}
+                                  // onClick={() => handleViewDetails(product._id)}
+                                  to={`/Product-Details/${product._id}`}
                                 >
                                   View Details
-                                </button>
+                                </Link>
                               </div>
                             </MDBRow>
                           </MDBCardBody>
