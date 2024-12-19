@@ -7,9 +7,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../Home/Alert.css';
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function ProductCarousel() {
+  const navigate = useNavigate();
   const [bikes, setBikes] = useState([]);
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   // Notification functions
   const notifySuccess = () => toast.success('Item added to cart', {
@@ -55,7 +59,7 @@ function ProductCarousel() {
     ]
   };
 
-  // Fetch bikes from server
+  // Fetch bikes from server 
   useEffect(() => {
     const fetchBikes = async () => {
       try {
@@ -83,6 +87,14 @@ function ProductCarousel() {
         console.error("Error adding item to cart:", error);
         notifyError();
     }
+};
+
+const handleViewDetails = (id) => {
+  if (isAuthenticated) {
+    navigate(`/Product-Details/${id}`);
+  } else {
+    navigate('/Auth-Signin') // Redirect to Auth0 signup/login page
+  }
 };
 
   return (
@@ -134,7 +146,7 @@ function ProductCarousel() {
                       <button className="btn btn-outline-success" onClick={() => addToCart(bike)}>Add to cart</button>
                     </p>
                     <div className="ms-auto text-warning">
-                      <button className="btn btn-outline-primary">View Details</button>
+                      <button className="btn btn-outline-primary"  onClick={() => handleViewDetails(bike._id)}>View Details</button>
                     </div>
                   </div>
                   Check details via <a href={bike.url} target="_blank" rel="noopener noreferrer">link</a>

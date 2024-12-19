@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
 import {
   MDBCard,
   MDBCardBody,
@@ -21,6 +23,8 @@ import "../Home/Home.css";
 
 function Topproducts() {
   const [bikes, setBikes] = useState([]);
+  const { isAuthenticated, loginWithRedirect } = useAuth0(); // Import Auth0 hook
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBikes = async () => {
@@ -51,6 +55,14 @@ function Topproducts() {
     slidesToScroll: 1,
   };
 
+  const handleViewDetails = (id) => {
+    if (isAuthenticated) {
+      navigate(`/Product-Details/${id}`);
+    } else {
+      navigate('/Auth-Signin') // Redirect to Auth0 signup/login page
+    }
+  };
+
   return (
     <>
       <div className="container-fluid donate bg-light">
@@ -68,10 +80,10 @@ function Topproducts() {
                     <p className="text-dark-50 mt-4">
                        {value.description}
                     </p>
-                    <Link to={`/product/${value.id}`} className="btn btn-outline-primary mt-3">
+                    <Button  onClick={() => handleViewDetails(value._id)}   className="btn btn-outline-primary mt-3">
                       View Details
-                    </Link>
-                  </Col>
+                    </Button>
+                  </Col> 
                   <Col lg={6} className="text-center">
                     <img
                       className="img-fluid"
@@ -101,10 +113,11 @@ function Topproducts() {
                       src={`http://localhost:5000/uploads/${bike.image}`}
                       alt={bike.name}
                       className="img-fluid"
+                      onClick={() => handleViewDetails(bike._id)}
                     />
-                    <a href="#!">
+                    {/* <a href="#!">
                       <div className="mask" style={{ backgroundColor: "rgba(251, 251, 251, 0.15)" }}></div>
-                    </a>
+                    </a> */}
                   </MDBRipple>
                   <MDBCardBody>
                     <MDBCardTitle>{bike.name}</MDBCardTitle>

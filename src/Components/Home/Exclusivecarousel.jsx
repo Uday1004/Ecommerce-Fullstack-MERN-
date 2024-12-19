@@ -5,15 +5,15 @@ import "slick-carousel/slick/slick-theme.css";
 import { Row, Col } from "react-bootstrap";
 import { Exclusive } from "../Data/Data";
 import { Link } from "react-router-dom";
-import '../Home/Home.css'
+import '../Home/Home.css';
 
 function Exclusivecarousel() {
   const settings = {
-    arrows:false,
+    arrows: false,
     nav: false,
     dots: false,
     infinite: true,
-    autoplay:  true,
+    autoplay: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -21,7 +21,7 @@ function Exclusivecarousel() {
 
   return (
     <section className="bg-dark">
-      <h2 className="text-center mb-4 text-white">{}</h2>
+      <h2 className="text-center mb-4 text-white">Exclusive Products</h2>
       <Slider {...settings}>
         {Exclusive.map((value, index) => (
           <div key={index}>
@@ -33,12 +33,13 @@ function Exclusivecarousel() {
                   src={value.bike_image}
                   alt={value.bike_name}
                 />
-                 
               </Col>
             </Row>
-            <div className="d-flex" style={{alignItems:'center',justifyContent:'center'}}>
-              <button className="btn btn-outline-primary exclusive-btn">view details</button>
-
+            <div className="d-flex" style={{ alignItems: 'center', justifyContent: 'center' }}>
+              {/* Use Link to navigate to the details page with the bike's id */}
+              <Link to={`/product/${value.id}`} className="btn btn-outline-primary exclusive-btn">
+                View Details
+              </Link>
             </div>
           </div>
         ))}

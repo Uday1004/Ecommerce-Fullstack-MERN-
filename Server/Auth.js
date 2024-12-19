@@ -43,7 +43,7 @@ app.use(express.json());
 
 // Authentication Routes
 app.post(
-  '/api/auth/signup',
+  'mongodb://localhost:27017/userdb',
   [
     check('firstName', 'First Name is required').not().isEmpty(),
     check('email', 'Please include a valid email').isEmail(),

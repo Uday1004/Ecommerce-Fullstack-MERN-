@@ -17,7 +17,8 @@ import {
 import { Layout, Menu, Select, Checkbox } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 import { Slider } from "antd";
-import { useNavigate , Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const { Sider, Content } = Layout;
 const { Option } = Select;
@@ -30,6 +31,7 @@ const ProductPage = () => {
   const [priceRange, setPriceRange] = useState([1500, 5000]);
   const [recentUpload, setRecentUpload] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const { isAuthenticated, loginWithRedirect } = useAuth0(); // Import Auth0 hook
   const navigate = useNavigate();
 
   const notifySuccess = () =>
@@ -57,7 +59,7 @@ const ProductPage = () => {
         console.error("Error fetching products:", error);
         setLoading(false);
       }
-    }; 
+    };
 
     fetchProducts();
   }, []);
@@ -93,7 +95,7 @@ const ProductPage = () => {
   const handleCategoryChange = (value) => {
     setSelectedCategory(value);
   };
-
+ 
   const handlePriceRangeChange = (value) => {
     setPriceRange(value);
   };
@@ -118,12 +120,13 @@ const ProductPage = () => {
     }
   };
 
-
-  // const handleViewDetails = (id) => {
-  //   navigate(`/Product-Details/${id}`);
-  // };
-
- 
+  const handleViewDetails = (id) => {
+    if (isAuthenticated) {
+      navigate(`/Product-Details/${id}`);
+    } else {
+      navigate('/Auth-Signin') // Redirect to Auth0 signup/login page
+    }
+  };
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -262,13 +265,12 @@ const ProductPage = () => {
                                 >
                                   Add to cart
                                 </button>
-                                <Link
+                                <button
                                   className="btn btn-outline-primary"
-                                  // onClick={() => handleViewDetails(product._id)}
-                                  to={`/Product-Details/${product._id}`}
+                                  onClick={() => handleViewDetails(product._id)}
                                 >
                                   View Details
-                                </Link>
+                                </button>
                               </div>
                             </MDBRow>
                           </MDBCardBody>
@@ -276,7 +278,7 @@ const ProductPage = () => {
                       </MDBCol>
                     ))
                   ) : (
-                    <p>No products found</p>
+                    <p>No products found.</p>
                   )}
                 </MDBRow>
               </div>
@@ -284,7 +286,6 @@ const ProductPage = () => {
           )}
         </Content>
       </Layout>
-      <ToastContainer />
     </Layout>
   );
 };

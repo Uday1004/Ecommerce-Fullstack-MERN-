@@ -11,8 +11,23 @@ import {
   MDBCheckbox,
 } from "mdb-react-ui-kit";
 import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Signin() {
+  const { loginWithRedirect } = useAuth0();
+
+  const handleGoogleLogin = () => {
+    loginWithRedirect({
+      connection: "google-oauth2",
+    });
+  };
+
+  const handleGithubLogin = () => {
+    loginWithRedirect({
+      connection: "github",
+    });
+  };
+
   return (
     <MDBContainer fluid>
       <MDBRow className="d-flex justify-content-center align-items-center h-100">
@@ -57,27 +72,29 @@ function Signin() {
                 className="mb-2 w-100"
                 size="lg"
                 style={{ backgroundColor: "#dd4b39" }}
+                onClick={handleGoogleLogin}
               >
                 <MDBIcon fab icon="google" className="mx-2" />
-                Sign in with google
+                Sign in with Google
               </MDBBtn>
 
               <MDBBtn
                 className="mb-4 w-100"
                 size="lg"
                 style={{ backgroundColor: "rgb(36 41 49)" }}
+                onClick={handleGithubLogin}
               >
                 <MDBIcon fab icon="github" className="mx-2" />
-                Sign in with Github
+                Sign in with GitHub
               </MDBBtn>
+
               <p className="small fw-bold mt-2 pt-1 mb-2">
                 Don't have an account?{" "}
-                <Link to='/Auth-Signup' className="link-danger">
+                <Link to="/Auth-Signup" className="link-danger">
                   Register
                 </Link>
               </p>
             </MDBCardBody>
-             
           </MDBCard>
         </MDBCol>
       </MDBRow>

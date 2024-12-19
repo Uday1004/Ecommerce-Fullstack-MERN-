@@ -37,11 +37,11 @@ function Signup() {
     }
 
     try {
-      const res = await axios.post('/api/auth/signup', formData);
+      const res = await axios.post('/api/register', formData); // Replace with your backend endpoint
       console.log('User registered:', res.data);
       // Redirect or update UI after successful signup
     } catch (err) {
-      console.error(err.response.data);
+      console.error(err.response ? err.response.data : err.message);
     }
   };
 
@@ -137,7 +137,7 @@ function Signup() {
                 onClick={() => loginWithRedirect({ connection: 'google-oauth2' })}
               >
                 <MDBIcon fab icon="google" className="mx-2" />
-                Sign in with Google
+                Sign up with Google
               </MDBBtn>
 
               <MDBBtn
@@ -147,7 +147,7 @@ function Signup() {
                 onClick={() => loginWithRedirect({ connection: 'github' })}
               >
                 <MDBIcon fab icon="github" className="mx-2" />
-                Sign in with GitHub
+                Sign up with GitHub
               </MDBBtn>
 
               <p className="small fw-bold mt-2 pt-1 mb-2">
