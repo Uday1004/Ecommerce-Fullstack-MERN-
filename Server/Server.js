@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/GoRide', {
+mongoose.connect('mongodb+srv://sandy:mklop@cluster1.huyf1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => console.log('MongoDB connected'))
@@ -80,6 +80,7 @@ app.post('/submit', upload.single('image'), async (req, res) => {
 app.get('/bikes', async (req, res) => {
     try {
         const bikes = await FormData.find();
+        console.log('Fetched bikes:', bikes);
         res.json(bikes);
     } catch (error) {
         console.error('Error fetching bikes:', error);
