@@ -6,18 +6,16 @@ import {
   MDBCardTitle,
   MDBCardText,
   MDBCardImage,
-  MDBBtn,
   MDBRipple,
   MDBRow,
   MDBCol,
   MDBInput,
   MDBContainer,
-  MDBIcon,
 } from "mdb-react-ui-kit";
 import { Layout, Menu, Select, Checkbox } from "antd";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { Slider } from "antd";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const { Sider, Content } = Layout;
@@ -31,7 +29,7 @@ const ProductPage = () => {
   const [priceRange, setPriceRange] = useState([1500, 5000]);
   const [recentUpload, setRecentUpload] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const { isAuthenticated, loginWithRedirect } = useAuth0(); // Import Auth0 hook
+  const { isAuthenticated } = useAuth0(); // Import Auth0 hook
   const navigate = useNavigate();
 
   const notifySuccess = () =>
@@ -73,7 +71,7 @@ const ProductPage = () => {
       updatedProducts = updatedProducts.filter((product) =>
         selectedCategory.includes(product.category)
       );
-    }
+    } 
 
     if (priceRange) {
       updatedProducts = updatedProducts.filter(
@@ -165,9 +163,9 @@ const ProductPage = () => {
                 onChange={handleCategoryChange}
                 style={{ width: "100%" }}
               >
-                <Option value="Category1">Category 1</Option>
-                <Option value="Category2">Category 2</Option>
-                <Option value="Category3">Category 3</Option>
+                <Option value="Royal Enfield">Royal Enfield</Option>
+                <Option value="Bajaj">Bajaj</Option>
+                <Option value="Hero">Hero</Option>
               </Select>
             </div>
             <div className="mt-4 mb-4">

@@ -17,9 +17,7 @@ import {
   EditOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
-// import 'antd/dist/antd.css';
-import "./Upload.css";
-import { MDBBtn, MDBInput } from "mdb-react-ui-kit";
+import { MDBBtn } from "mdb-react-ui-kit";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -35,9 +33,8 @@ const Upload = () => {
   const [description, setDescription] = useState("");
   const [messageText, setMessageText] = useState("");
   const [bikes, setBikes] = useState([]);
-  const [fileName, setFileName] = useState('');
-
-   
+  const [fileName, setFileName] = useState("");
+  const [editBike, setEditBike] = useState(null); // Added state to store the bike being edited
 
   useEffect(() => {
     const fetchBikes = async () => {
@@ -52,7 +49,35 @@ const Upload = () => {
     fetchBikes();
   }, []);
 
-  const handleShowModal = () => setShowModal(true);
+  const handleEdit = (bike) => {
+    setEditBike(bike);
+    setShowModal(true);
+  };
+
+  const handleShowModal = (bike = null) => {
+    if (bike) {
+      setEditBike(bike); // Set the bike to edit when passed
+      setName(bike.name);
+      setCategory(bike.category);
+      setType(bike.type);
+      setPriceRange(bike.priceRange);
+      setInsurance(bike.insurance);
+      setImage(null); // If the bike has an image, you can manage it here
+      setDescription(bike.description);
+    } else {
+      setEditBike(null); // Reset if it's for adding a new bike
+      setName("");
+      setCategory("");
+      setType("");
+      setPriceRange(1500);
+      setInsurance("");
+      setImage(null);
+      setDescription("");
+    }
+
+    setShowModal(true);
+  };
+
   const handleCloseModal = () => setShowModal(false);
 
   const handleSubmit = async (e) => {
@@ -68,14 +93,31 @@ const Upload = () => {
     formData.append("description", description);
 
     try {
-      const res = await axios.post("http://localhost:5000/submit", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      let res;
+      if (editBike) {
+        // If editing, update the existing bike
+        res = await axios.put(`http://localhost:5000/bikes/${editBike.id}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      } else {
+        // If adding, submit a new bike
+        res = await axios.post("http://localhost:5000/submit", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      }
 
       if (res.data.bike) {
-        setBikes([...bikes, res.data.bike]);
+        setBikes((prevBikes) =>
+          editBike
+            ? prevBikes.map((bike) =>
+                bike.id === editBike.id ? res.data.bike : bike
+              )
+            : [...prevBikes, res.data.bike]
+        );
       } else {
         console.error("Bike data is missing in the response");
       }
@@ -98,18 +140,39 @@ const Upload = () => {
     return false; // Prevent automatic upload
   };
 
+  const handleDeleteBike = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/bikes/${id}`);
+      setBikes(bikes.filter((bike) => bike.id !== id));
+    } catch (err) {
+      console.error("Error deleting bike:", err);
+    }
+  };
+  useEffect(() => {
+    // Set state for editing when a bike is selected for edit
+    if (editBike) {
+      setName(editBike.name);
+      setCategory(editBike.category);
+      setType(editBike.type);
+      setPriceRange(editBike.priceRange);
+      setInsurance(editBike.insurance);
+      setImage(null); // Reset image to avoid carrying old images
+      setDescription(editBike.description);
+    }
+  }, [editBike]);
+
   return (
     <div className="upload-container">
-      <section class="py-5">
-        <div class="container text-left px-5 my-5">
-          <div class="d-inline-block">
-            <h1 class="fw-bolder">Frequently Asked Questions</h1>
-            <p class="lead fw-normal text-muted mb-0">How can we help you?</p>
+      <section className="py-5">
+        <div className="container text-left px-5 my-5">
+          <div className="d-inline-block">
+            <h1 className="fw-bolder">Frequently Asked Questions</h1>
+            <p className="lead fw-normal text-muted mb-0">How can we help you?</p>
           </div>
-          <div class="text-end mt-3">
+          <div className="text-end mt-3">
             <MDBBtn
               type="primary"
-              onClick={handleShowModal}
+              onClick={() => handleShowModal()}
               className="add-button"
               style={{ visibility: `${bikes.length > 0 ? "" : "hidden"}` }}
             >
@@ -151,24 +214,24 @@ const Upload = () => {
                       <p>Category: {bike.category}</p>
                       <p>Type: {bike.type === 1 ? "Default" : "Modified"}</p>
                       <p>Price Range: {bike.priceRange}</p>
-                      {/* <p>Insurance: {bike.insurance === 1 ? "Yes" : "No"}</p>
-                      <p>Description: {bike.description}</p> */}
                     </>
                   }
                 />
                 <div className="bike-actions gap-5">
                   <MDBBtn
                     type="primary"
-                    className=" btn btn-danger"
+                    className="btn btn-danger"
                     danger
                     icon={<DeleteOutlined />}
+                    onClick={() => handleDeleteBike(bike.id)}
                   >
                     Delete
                   </MDBBtn>
                   <MDBBtn
-                    type="primary  "
-                    className=" mx-2 btn btn-success"
+                    type="primary"
+                    className="mx-2 btn btn-success"
                     icon={<EditOutlined />}
+                    onClick={() => handleEdit(bike)} // Pass bike to edit
                   >
                     Edit
                   </MDBBtn>
@@ -181,16 +244,15 @@ const Upload = () => {
 
       <MDBBtn
         type="primary"
-        style={{ marginTop: "2rem" , visibility: `${bikes.length > 0 ? "hidden" : ""}` }}
-        onClick={handleShowModal}
+        style={{ marginTop: "2rem", visibility: `${bikes.length > 0 ? "hidden" : ""}` }}
+        onClick={() => handleShowModal()} // Open empty form for new bike
         className="add-button"
-         
       >
         Add +
       </MDBBtn>
 
       <Modal
-        title="Add Your Bike"
+        title={editBike ? "Edit Your Bike" : "Add Your Bike"}
         visible={showModal}
         onCancel={handleCloseModal}
         footer={null}

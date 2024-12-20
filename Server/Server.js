@@ -80,7 +80,6 @@ app.post('/submit', upload.single('image'), async (req, res) => {
 app.get('/bikes', async (req, res) => {
     try {
         const bikes = await FormData.find();
-        console.log('Fetched bikes:', bikes);
         res.json(bikes);
     } catch (error) {
         console.error('Error fetching bikes:', error);
