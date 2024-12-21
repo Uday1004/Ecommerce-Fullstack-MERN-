@@ -9,9 +9,15 @@ function Navbar() {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const { user, isAuthenticated } = useAuth0();
   const { logout } = useAuth0();
+  const { loginWithRedirect } = useAuth0();
 
   const toggleDrawer = () => {
     setDrawerOpen(!isDrawerOpen);
+  };
+  const handleGoogleLogin = () => {
+    loginWithRedirect({
+      connection: "google-oauth2",
+    });
   };
 
   return (
@@ -55,7 +61,8 @@ function Navbar() {
                   Exclusives
                 </Link>
               </li>
-              <li className="nav-item dropdown mx-3">
+              {isAuthenticated ? 
+              (<li className="nav-item dropdown mx-3">
                 <a
                   className="nav-link dropdown-toggle"
                   href="#"
@@ -89,7 +96,8 @@ function Navbar() {
                     </a>
                   </li>
                 </ul>
-              </li>
+              </li>):(<div></div>)}
+              
               <li className="nav-item">
                 <a className="nav-link" href="#" onClick={toggleDrawer}>
                   <i className="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -156,7 +164,7 @@ function Navbar() {
                 </li>
               ) : (
                 <li className="nav-item dropdown mx-3">
-                  <Link
+                  <a
                     className="nav-link "
                     to="/Auth-Signin"
                     // id="navbarDropdownUser"
@@ -164,10 +172,10 @@ function Navbar() {
                     // data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    <button className="btn btn-primary" aria-hidden="true">
+                    <button className="btn btn-primary" aria-hidden="true" onClick={handleGoogleLogin}>
                       Login
                     </button>
-                  </Link>
+                  </a>
                 </li>
               )}
             </ul>

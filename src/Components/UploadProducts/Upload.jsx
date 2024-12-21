@@ -93,44 +93,32 @@ const Upload = () => {
     formData.append("description", description);
 
     try {
-      let res;
-      if (editBike) {
-        // If editing, update the existing bike
-        res = await axios.put(`http://localhost:5000/bikes/${editBike.id}`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-      } else {
-        // If adding, submit a new bike
-        res = await axios.post("http://localhost:5000/submit", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-      }
+      const res = editBike
+        ? await axios.put(
+            `http://localhost:5000/bikes/${editBike._id}`,
+            formData,
+            {
+              headers: { "Content-Type": "multipart/form-data" },
+            }
+          )
+        : await axios.post("http://localhost:5000/submit", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          });
 
-      if (res.data.bike) {
-        setBikes((prevBikes) =>
-          editBike
-            ? prevBikes.map((bike) =>
-                bike.id === editBike.id ? res.data.bike : bike
-              )
-            : [...prevBikes, res.data.bike]
+      const updatedBike = res.data.bike;
+      if (editBike) {
+        setBikes((prev) =>
+          prev.map((bike) => (bike._id === editBike.id ? updatedBike : bike))
         );
       } else {
-        console.error("Bike data is missing in the response");
+        setBikes((prev) => [...prev, updatedBike]);
       }
 
-      setMessageText(res.data.message);
+      message.success("Bike successfully saved.");
       handleCloseModal();
-      window.location.reload();
     } catch (err) {
-      console.error(err);
-      message.error(
-        err.response?.data?.message ||
-          "An error occurred while submitting the form."
-      );
+      console.error("Submit error:", err.response?.data || err.message);
+      message.error("Failed to save the bike. Try again.");
     }
   };
 
@@ -141,13 +129,16 @@ const Upload = () => {
   };
 
   const handleDeleteBike = async (id) => {
+    console.log("Deleting bike with ID:", id); // Debugging log
     try {
-      await axios.delete(`http://localhost:5000/bikes/${id}`);
-      setBikes(bikes.filter((bike) => bike.id !== id));
+      const response = await axios.delete(`http://localhost:5000/bikes/${id}`);
+      console.log(response.data.message);
+      // Update UI after successful deletion
     } catch (err) {
-      console.error("Error deleting bike:", err);
+      console.error("Error:", err.response?.data || err.message);
     }
   };
+
   useEffect(() => {
     // Set state for editing when a bike is selected for edit
     if (editBike) {
@@ -167,7 +158,9 @@ const Upload = () => {
         <div className="container text-left px-5 my-5">
           <div className="d-inline-block">
             <h1 className="fw-bolder">Frequently Asked Questions</h1>
-            <p className="lead fw-normal text-muted mb-0">How can we help you?</p>
+            <p className="lead fw-normal text-muted mb-0">
+              How can we help you?
+            </p>
           </div>
           <div className="text-end mt-3">
             <MDBBtn
@@ -223,7 +216,7 @@ const Upload = () => {
                     className="btn btn-danger"
                     danger
                     icon={<DeleteOutlined />}
-                    onClick={() => handleDeleteBike(bike.id)}
+                    onClick={() => handleDeleteBike(bike._id)}
                   >
                     Delete
                   </MDBBtn>
@@ -244,7 +237,10 @@ const Upload = () => {
 
       <MDBBtn
         type="primary"
-        style={{ marginTop: "2rem", visibility: `${bikes.length > 0 ? "hidden" : ""}` }}
+        style={{
+          marginTop: "2rem",
+          visibility: `${bikes.length > 0 ? "hidden" : ""}`,
+        }}
         onClick={() => handleShowModal()} // Open empty form for new bike
         className="add-button"
       >

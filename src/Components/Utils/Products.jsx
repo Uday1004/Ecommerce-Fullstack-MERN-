@@ -71,7 +71,7 @@ const ProductPage = () => {
       updatedProducts = updatedProducts.filter((product) =>
         selectedCategory.includes(product.category)
       );
-    } 
+    }  
 
     if (priceRange) {
       updatedProducts = updatedProducts.filter(
@@ -82,9 +82,7 @@ const ProductPage = () => {
     }
 
     if (recentUpload) {
-      updatedProducts = updatedProducts.sort(
-        (a, b) => new Date(b.uploadDate) - new Date(a.uploadDate)
-      );
+      updatedProducts = updatedProducts.reverse()
     }
 
     setFilteredProducts(updatedProducts);

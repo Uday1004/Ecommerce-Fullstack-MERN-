@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   MDBBtn,
   MDBContainer,
@@ -10,11 +10,30 @@ import {
   MDBIcon,
   MDBCheckbox,
 } from "mdb-react-ui-kit";
-import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
 function Signin() {
   const { loginWithRedirect } = useAuth0();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    if (email && password) {
+      // Manual Login
+      try {
+        await loginWithRedirect({
+          connection: "Username-Password-Authentication", // Adjust as per your database connection name
+          email,
+          password,
+        });
+      } catch (error) {
+        console.error("Login error:", error);
+      }
+    } else {
+      // Redirect to Auth0-hosted login form
+      loginWithRedirect();
+    }
+  };
 
   const handleGoogleLogin = () => {
     loginWithRedirect({
@@ -39,7 +58,7 @@ function Signin() {
             <MDBCardBody className="p-5 w-100 d-flex flex-column">
               <h2 className="fw-bold mb-2 text-center">Sign in</h2>
               <p className="text-white-50 mb-3">
-                Please enter your login and password!
+                Please enter your login and password or use a provider!
               </p>
 
               <MDBInput
@@ -48,6 +67,8 @@ function Signin() {
                 id="formControlLg"
                 type="email"
                 size="lg"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <MDBInput
                 wrapperClass="mb-4 w-100"
@@ -55,6 +76,8 @@ function Signin() {
                 id="formControlLg"
                 type="password"
                 size="lg"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
 
               <MDBCheckbox
@@ -64,7 +87,9 @@ function Signin() {
                 label="Remember password"
               />
 
-              <MDBBtn size="lg">Login</MDBBtn>
+              <MDBBtn size="lg" onClick={handleLogin}>
+                Login
+              </MDBBtn>
 
               <hr className="my-4" />
 
@@ -87,13 +112,6 @@ function Signin() {
                 <MDBIcon fab icon="github" className="mx-2" />
                 Sign in with GitHub
               </MDBBtn>
-
-              <p className="small fw-bold mt-2 pt-1 mb-2">
-                Don't have an account?{" "}
-                <Link to="/Auth-Signup" className="link-danger">
-                  Register
-                </Link>
-              </p>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
